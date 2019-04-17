@@ -1,7 +1,8 @@
 const initialState = {
   isFetching: false,
-  error: null,
+  error: '',
   token: '',
+  sources: [],
 };
 
 const asyncReducer = (state = initialState, action) => {
@@ -20,7 +21,24 @@ const asyncReducer = (state = initialState, action) => {
     case 'CONNECT_FAILED': {
       return {
         ...state,
-        error: action.data,
+        error: action.data.toString(),
+      };
+    }
+    case 'FETCH_SOURCES': {
+      return {
+        ...state,
+      };
+    }
+    case 'FETCHED_SOURCES': {
+      return {
+        ...state,
+        sources: action.data,
+      };
+    }
+    case 'FETCH_SOURCES_ERROR': {
+      return {
+        ...state,
+        error: action.data.toString(),
       };
     }
     default: {

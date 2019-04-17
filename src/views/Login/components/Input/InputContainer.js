@@ -10,10 +10,11 @@ import { TextButton } from 'react-native-material-buttons';
 import PropTypes from 'prop-types';
 import { ThemeColorText } from 'src/style/GeneralStyleSheet';
 import EmailInput from 'src/components/EmailInput';
+import { connect } from 'react-redux';
 import Styles from './StyleInputConnection';
 import { actionConnectUser } from '../../../../redux/actions';
 
-export default class InputContainer extends Component {
+class InputContainer extends Component {
   constructor(props) {
     super(props);
     this.state = { email: '', password: '', errorMessage: null };
@@ -29,7 +30,14 @@ export default class InputContainer extends Component {
       return;
     }
     store.dispatch(actionConnectUser(email, password))
-      .then(() => navigation.navigate('Main'));
+      .then(() => {
+        const { error, token } = this.props;
+        if (error === '' && token !== '') {
+          navigation.navigate('Main');
+        } else {
+          this.setState({ errorMessage: 'Bad password.' });
+        }
+      });
   }
 
   updateState(st, val) {
@@ -40,9 +48,11 @@ export default class InputContainer extends Component {
 
   render() {
     const { errorMessage } = this.state;
+    const { error } = this.props;
     return (
       <View>
         {errorMessage && <Text style={Styles.errorMessage}>{errorMessage}</Text>}
+        {error !== '' && <Text style={Styles.errorMessage}>{error}</Text>}
         <EmailInput
           label="Email or Login"
           mail="email"
@@ -63,8 +73,22 @@ export default class InputContainer extends Component {
   }
 }
 
+const mapStateToProps = state => ({
+  error: state.error,
+  token: state.token,
+});
+
 InputContainer.propTypes = {
   navigation: PropTypes.shape({
     navigate: PropTypes.func.isRequired,
   }).isRequired,
+  error: PropTypes.string,
+  token: PropTypes.string,
 };
+
+InputContainer.defaultProps = {
+  error: '',
+  token: '',
+};
+
+export default connect(mapStateToProps)(InputContainer);
