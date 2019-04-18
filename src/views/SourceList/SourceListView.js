@@ -24,23 +24,29 @@ class SourceListView extends Component {
     store.dispatch(actionFetchSourceList(token));
   }
 
-  onPressItem(index) {
-    const { sources, navigation } = this.props;
-    const target = sources[index];
-    navigation.navigate('SourceView', { target });
+  onPressItem(item) {
+    const { navigation } = this.props;
+    navigation.navigate('SourceView', { source_id: item.source_id });
   }
 
   render() {
-    const { sources } = this.props;
+    const { sources, navigation, token } = this.props;
     return (
       <View style={styles.container}>
-        <Header centerComponent={{ text: 'Sources List', style: { color: '#fff' } }} />
+        <Header
+          centerComponent={{ text: 'Sources List', style: { color: '#fff' } }}
+          rightComponent={{
+            icon: 'add',
+            color: '#fff',
+            onPress: () => navigation.navigate('AddSource', { token }),
+          }}
+        />
         <FlatList
           data={sources}
-          renderItem={({ item, index }) => (
+          renderItem={({ item }) => (
             <TouchableOpacity
               style={SourceListStyle.touchable}
-              onPress={() => this.onPressItem(index)}
+              onPress={() => this.onPressItem(item)}
             >
               <View style={SourceListStyle.card}>
                 <View style={SourceListStyle.infoContainer}>

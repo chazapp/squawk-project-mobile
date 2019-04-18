@@ -28,6 +28,20 @@ export const fetchSourcesFailed = error => ({
   data: error,
 });
 
+export const fetchSourceContent = () => ({
+  type: 'FETCH_SOURCE_CONTENT',
+});
+
+export const fetchedSourceContent = content => ({
+  type: 'FETCHED_SOURCE_CONTENT',
+  data: content,
+});
+
+export const fetchedSourceContentFailed = error => ({
+  type: 'FETCHED_SOURCE_CONTENT_ERROR',
+  data: error,
+});
+
 export const actionConnectUser = (email, password) => {
   const contentType = 'application/json';
   store.dispatch(connectUser());
@@ -63,5 +77,20 @@ export const actionFetchSourceList = (token) => {
     })
     .catch((error) => {
       store.dispatch(fetchSourcesFailed(error));
+    });
+};
+
+export const actionFetchSourceContent = (sourceID, token) => {
+  store.dispatch(fetchSourceContent());
+  return () => fetch(`https://squawkapi.chaz.pro/source/${sourceID}/content`, {
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  }).then(response => response.json())
+    .then((responseJson) => {
+      store.dispatch(fetchedSourceContent(responseJson.content));
+    }).catch((error) => {
+      store.dispatch(fetchedSourceContentFailed(error));
     });
 };

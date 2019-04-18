@@ -3,6 +3,7 @@ const initialState = {
   error: '',
   token: '',
   sources: [],
+  content: [],
 };
 
 const asyncReducer = (state = initialState, action) => {
@@ -36,6 +37,23 @@ const asyncReducer = (state = initialState, action) => {
       };
     }
     case 'FETCH_SOURCES_ERROR': {
+      return {
+        ...state,
+        error: action.data.toString(),
+      };
+    }
+    case 'FETCH_SOURCE_CONTENT': {
+      return {
+        ...state,
+      };
+    }
+    case 'FETCHED_SOURCE_CONTENT': {
+      return {
+        ...state,
+        content: action.data,
+      };
+    }
+    case 'FETCHED_SOURCE_CONTENT_ERROR': {
       return {
         ...state,
         error: action.data.toString(),
