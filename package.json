@@ -7,9 +7,10 @@
   "dependencies": {
     "prop-types": "latest",
     "react": "16.5.0",
-    "react-native": "https://github.com/expo/react-native/archive/sdk-32.0.0.tar.gz",
+    "react-native": "0.59.5",
     "react-native-element": "^1.2.1",
     "react-native-elements": "^1.1.0",
+    "react-native-gesture-handler": "1.2.1",
     "react-native-material-buttons": "^0.5.0",
     "react-native-material-textfield": "^0.12.0",
     "react-native-vector-icons": "^6.4.2",
@@ -19,12 +20,19 @@
     "redux-thunk": "^2.3.0"
   },
   "devDependencies": {
-    "babel-preset-expo": "^5.0.0",
+    "@babel/core": "^7.1.6",
+    "@babel/plugin-proposal-object-rest-spread": "^7.0.0",
+    "@babel/plugin-transform-object-assign": "^7.0.0",
+    "@babel/plugin-transform-react-jsx": "^7.1.6",
+    "@babel/preset-env": "^7.1.6",
+    "@babel/preset-react": "^7.0.0",
+    "metro-react-native-babel-preset": "^0.54.0",
     "eslint": "^5.16.0",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-plugin-import": "2.14.0",
     "eslint-plugin-jsx-a11y": "6.1.1",
-    "eslint-plugin-react": "7.11.0"
+    "eslint-plugin-react": "7.11.0",
+    "scheduler": "^0.14.0"
   },
   "private": true
 }
