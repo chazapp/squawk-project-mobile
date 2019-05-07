@@ -1,7 +1,8 @@
 import React from 'react';
 import {
-  View, Text, ActivityIndicator, StyleSheet, AsyncStorage,
+  View, Text, ActivityIndicator, StyleSheet,
 } from 'react-native';
+// import AsyncStorage from '@react-native-community/async-storage';
 import PropTypes from 'prop-types';
 
 const styles = StyleSheet.create({
@@ -13,15 +14,15 @@ const styles = StyleSheet.create({
 });
 
 export default class LoadingView extends React.Component {
-  componentDidMount() {
+  async componentDidMount() {
     const { navigation } = this.props;
-    AsyncStorage.getItem('@Store:token', (value) => {
-      if (value !== null) {
-        navigation.navigate('Main');
-      } else {
-        navigation.navigate('Login');
-      }
-    });
+    /* const value = await AsyncStorage.getItem('@Store:token');
+    if (value !== null) {
+      navigation.navigate('Main');
+    } else {
+      navigation.navigate('Login');
+    } */
+    navigation.navigate('Login');
   }
 
   render() {
