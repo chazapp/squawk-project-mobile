@@ -91,6 +91,6 @@ export const actionFetchSourceContent = (sourceID, token) => {
     .then((responseJson) => {
       store.dispatch(fetchedSourceContent(responseJson.content));
     }).catch((error) => {
-      store.dispatch(fetchedSourceContentFailed(error));
+      store.dispatch(fetchedSourceContentFailed(error.message));
     });
 };

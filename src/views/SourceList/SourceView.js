@@ -69,6 +69,7 @@ class SourceView extends Component {
             onPress: () => this.deleteSource(),
           }}
         />
+        {content && (
         <FlatList
           data={content}
           renderItem={({ item }) => (
@@ -89,6 +90,7 @@ class SourceView extends Component {
           )}
           keyExtractor={(item, index) => index.toString()}
         />
+        )}
       </View>
     );
   }
@@ -100,13 +102,17 @@ const mapStateToProps = state => ({
   content: state.content,
 });
 
+SourceView.defaultProps = {
+  content: [],
+};
+
 SourceView.propTypes = {
   navigation: PropTypes.shape({
     navigate: PropTypes.func.isRequired,
     getParam: PropTypes.func.isRequired,
   }).isRequired,
   token: PropTypes.string.isRequired,
-  content: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+  content: PropTypes.arrayOf(PropTypes.shape()),
 };
 
 export default connect(mapStateToProps)(SourceView);
