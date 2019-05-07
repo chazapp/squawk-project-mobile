@@ -42,10 +42,14 @@ class AddSource extends Component {
         name: hostname,
         link,
       }),
-    }).then(() => {
-      store.dispatch(actionFetchSourceList(token)).then(() => {
-        navigation.navigate('SourceList');
-      });
+    }).then((response) => {
+      if (response.status === 400) {
+        this.setState({ errorMessage: 'You must provide a valid link.' });
+      } else {
+        store.dispatch(actionFetchSourceList(token)).then(() => {
+          navigation.navigate('SourceList');
+        });
+      }
     });
   }
 
