@@ -21,7 +21,12 @@ const SourcesNavigator = createStackNavigator(
       },
     },
     AddSource,
-    SourceView,
+    SourceView: {
+      screen: SourceView,
+      navigationOptions: {
+        header: null,
+      },
+    },
   },
   {
     initialRouteName: 'SourceList',

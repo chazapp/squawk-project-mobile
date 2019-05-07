@@ -4,8 +4,9 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { Header } from 'react-native-elements';
 import store from '../../redux/store';
-import { actionFetchSourceContent } from '../../redux/actions';
+import { actionFetchSourceContent, actionFetchSourceList } from '../../redux/actions';
 
 const styles = StyleSheet.create({
   container: {
@@ -41,10 +42,33 @@ class SourceView extends Component {
     Linking.openURL(item.link);
   }
 
+  deleteSource() {
+    const { token, navigation } = this.props;
+    const sourceID = navigation.getParam('source_id');
+
+    fetch(`https://squawkapi.chaz.pro/source/${sourceID}`, {
+      method: 'DELETE',
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }).then(() => {
+      store.dispatch(actionFetchSourceList(token));
+      navigation.navigate('SourceList');
+    });
+  }
+
   render() {
     const { content } = this.props;
     return (
       <View style={styles.container}>
+        <Header
+          centerComponent={{ text: 'Sources List', style: { color: '#fff' } }}
+          rightComponent={{
+            icon: 'delete',
+            color: '#fff',
+            onPress: () => this.deleteSource(),
+          }}
+        />
         <FlatList
           data={content}
           renderItem={({ item }) => (
